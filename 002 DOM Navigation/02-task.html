@@ -20,6 +20,7 @@
     <p>Цвет: </p>
 
     <script>
+        'use strict';
         /*
         Задание:
         Поправьте сценарий таким образом, чтобы кроме изменения цвета div#color-sample в параграфе под div выводилось сообщение
@@ -36,7 +37,11 @@
         }
 
         let colorSampleDiv = document.querySelector("#color-sample");
-        colorSampleDiv.style.backgroundColor = getRandomColor();
+        let randomColor = getRandomColor();
+        
+        colorSampleDiv.style.backgroundColor = randomColor;
+
+        colorSampleDiv.nextElementSibling.innerHTML += randomColor;
 
 
     </script>

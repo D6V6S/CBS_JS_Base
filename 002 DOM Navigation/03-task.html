@@ -68,6 +68,7 @@
     <div id="result"></div>
 
     <script>
+        'use strict';
         /*
         Задание:
         Добавьте строку "Итого" для таблицы statsTable. Напишите сценарий, которым выведите во вторую ячейку этой строки сумму всех числовых значений второй колонки.
@@ -75,6 +76,36 @@
         В div с id result выведите сообщение "Отдел 1 сделал больше продаж" или "Отдел 2 сделал больше продаж" на основе раннее вычисленных значений в строке "Итого".
         Используйте любые методы, которые были рассмотрены на в прошлых уроках.
         */
+
+        const table = document.querySelector("#statsTable");
+        
+        let rowLength = table.rows[0].cells.length; 
+
+        let tableText = "";
+        let sumStat = [];
+
+        for (let i = 1; i<=rowLength-1; i++){
+            tableText += `<td>${sumNum(table,i)}</td>`;
+            sumStat.push(sumNum(table,i));
+        }
+
+        function sumNum(table, rowCell){
+        let sumOtdel = 0; 
+            for (let row of table.rows) {
+                let lastCell = row.cells[rowCell];
+                if (lastCell.localName != "th")
+                sumOtdel += Number(lastCell.textContent);
+            }
+        return sumOtdel;
+        }
+
+        table.lastElementChild.innerHTML += `<tr><td>Итого</td>${tableText}</tr>`;
+
+        let maxIndex = sumStat.indexOf(Math.max.apply(null, sumStat));
+                
+        document.querySelector("#result").innerHTML = `"Отдел ${maxIndex + 1} сделал больше продаж"`;
+
+
     </script>
 </body>
 </html>
