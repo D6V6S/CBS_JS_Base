@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 02</title>
+</head>
+
+<body>
+    <script>
+        /*
+        Задание:
+        Напишите сценарий, который вычисляет объем цилиндра по параметрам, которые вводит пользователь.
+        Для расчета используйте формулу - V=π * r в квадрате * h
+        Разместите на странице два поля ввода - первое для радиуса цилиндра, второе для высоты цилиндра.
+        Объем цилиндра выведите в тело страницы.
+        */
+
+        //Creating form
+
+        let div = document.createElement("div");
+            div.id = "volume-form";
+      
+        let hRadius = document.createElement("h3");
+            hRadius.textContent = "Введіть радіус циліндра:";
+        div.append(hRadius);
+
+        let inputRadius = document.createElement("input");
+            inputRadius.type = "text";
+            inputRadius.id = "inputRadius";
+        div.append(inputRadius);
+
+        let hHeight = document.createElement("h3");
+            hHeight.textContent = "Введіть висоту циліндра:";
+        div.append(hHeight);
+
+        let inputHeight = document.createElement("input");
+            inputHeight.type = "text";
+            inputHeight.id = "inputHeight";
+        div.append(inputHeight);
+
+        div.append(document.createElement("br"));
+
+        let btn = document.createElement("button");
+            btn.textContent = "Розрахувати";
+            btn.id = "calcBtn";
+            btn.style.margin = "10px";
+        div.append(btn);
+
+        let pText = document.createElement("p");
+            pText.id = "calcResult";
+        div.append(pText);
+
+        document.body.prepend(div);
+        
+        // Processing
+
+        const calcBtn = document.querySelector("#calcBtn");
+
+        calcBtn.addEventListener("click", btnClic);
+
+        function btnClic(){
+            const rInput = document.querySelector("#inputRadius"); 
+            const hInput = document.querySelector("#inputHeight"); 
+            const pResult = document.querySelector("#calcResult"); 
+
+            let r = Number(rInput.value);
+            let h = Number(hInput.value);
+
+            if (!isNaN(r) && !isNaN(h)) {  
+                pResult.textContent = `Об'эм циліндру радіусом ${r} та висотою ${h} = ${volumeOfCylinder(r, h)} `;
+
+                rInput.value = "";
+                hInput.value = "";
+            } else { 
+                if (isNaN(r) && isNaN(h)) {
+                    alert("Форма заповнення не корректно. Перевірте значення радіусу та висоти.");
+                    rInput.value = "";
+                    hInput.value = "";
+                } else if (isNaN(r)) {
+                    alert("Форма заповнення не корректно. Перевірте значення радіусу");
+                    rInput.value = "";
+                } else if (isNaN(h)) {
+                    alert("Форма заповнення не корректно. Перевірте значення висоти.");
+                    hInput.value = "";
+                }
+            }
+        }
+
+        //Math
+
+        function volumeOfCylinder(r, h){            
+            return Math.PI*Math.pow(r, 2)*h;
+        }
+
+    </script>
+</body>
+
+</html>
