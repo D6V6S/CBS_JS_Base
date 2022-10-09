@@ -43,6 +43,7 @@
 
     <div id="output"></div>
     <script>
+        'use strict';
         /*
         Задание:
         Доработайте сценарий.
@@ -153,7 +154,8 @@
             }
         ];
 
-        let uslerList = document.querySelector("#userList");
+        const uslerList = document.querySelector("#userList");
+        const div = document.querySelector("div");
 
         for (let index = 0; index < users.length; index++) {
             const currentUser = users[index];
@@ -163,6 +165,17 @@
             li.dataset.userNumber = index;
             uslerList.append(li);
         }
+
+        function mouseEnterHandler(){
+            
+            let userIndex =  this.dataset.userNumber;
+
+            div.innerHTML = `Возраст: ${users[userIndex].age} <br> 
+                            Баланс: ${users[userIndex].balance} <br> 
+                            Компания: ${users[userIndex].company} <br> 
+                            email: ${users[userIndex].email}`;
+        }
+
     </script>
 </body>
 

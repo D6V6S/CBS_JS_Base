@@ -20,6 +20,7 @@
     <div id="element"></div>
 
     <script>
+        'use strict';
         /*
         Задание:
         Внесите изменения в сценарий. Сделайте чтобы при зажатой клавише Shift и нажатии стрелок на 
@@ -29,6 +30,12 @@
         let distance = 10;
 
         document.addEventListener("keydown", function (e) {
+            if (e.shiftKey === true){
+                distance = 20;
+            } else if(e.shiftKey === false){
+                distance = 10;  
+            }
+
             switch (e.code) {
                 case "ArrowLeft":
                     moveLeft(div, distance);
