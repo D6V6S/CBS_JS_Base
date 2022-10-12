@@ -56,18 +56,18 @@
         function checkInput(){
             resetInput();
 
-            if (isNaN(Number(input1.value)) && isNaN(Number(input2.value))) {
+            if ((isNaN(Number(input1.value)) || (input1.value == "")) && (isNaN(Number(input2.value)) || (input2.value == ""))) {
                 input1Error.style.display = "block";
                 input1.style.border = "2px solid red";
 
                 input2Error.style.display = "block";
                 input2.style.border = "2px solid red";
 
-            } else if (isNaN(Number(input1.value))){
+            } else if (isNaN(Number(input1.value)) || (input1.value == "")){
                 input1Error.style.display = "block";
                 input1.style.border = "2px solid red";
 
-            } else if (isNaN(Number(input2.value))) {
+            } else if (isNaN(Number(input2.value)) || (input2.value =="")) {
                 input2Error.style.display = "block";
                 input2.style.border = "2px solid red";
 
