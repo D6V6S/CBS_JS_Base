@@ -47,6 +47,7 @@
     <div id="generateButton">Generate</div>
     <div id="interactivePanel"></div>
     <script>
+        'use strict';
         /*
         Задание:
         Допишите сценарий, при нажатии на кнопку Generate, с помощью функции generateElement, должно создаваться 100 элементов и размещаться в
@@ -81,6 +82,56 @@
         function getRandomValue(max) {
             return Math.floor(Math.random() * max);
         }
+
+        // Доданий код
+
+        const generateButton = document.querySelector("#generateButton");
+        const interactivePanel = document.querySelector("#interactivePanel");
+        let move = false;
+        let offsetX, offsetY;
+        let currentDiv;
+
+        // створення 100 елементів та додавання їх в документ
+        generateButton.addEventListener("click", pasteElement);
+
+        function pasteElement(){
+            while (interactivePanel.firstChild){
+              interactivePanel.removeChild(interactivePanel.firstChild);  
+            }
+ 
+            let paste = "";
+
+            for (let i=0; i < 100; i++){
+                paste = generateElement();
+                interactivePanel.append(paste);
+            }
+        return 
+        }
+        
+        // Вибір елементу для переміщення
+        interactivePanel.addEventListener("mousedown", function (e) {
+            if (e.target.className =="interactiveElement"){
+                move = true;
+                offsetX = e.offsetX;
+                offsetY = e.offsetY;
+                console.log(e.offsetY);
+
+                currentDiv = e.target;   
+            }
+        });
+        
+        // Переміщення вибраного елементу
+        document.addEventListener("mousemove", function (e) {
+            if (move) {
+                currentDiv.style.top = e.clientY - offsetY - generateButton.clientHeight + "px";
+                currentDiv.style.left = e.clientX - offsetX + "px";
+            }
+        });
+
+        document.addEventListener("mouseup", function (e) {
+            move = false;
+        });
+
     </script>
 </body>
 

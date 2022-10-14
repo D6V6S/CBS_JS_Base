@@ -18,14 +18,16 @@
     <button id="div-btn">/</button>
 
     <script>
+        'use strict';
         /*
         Задание:
         Перепишите сценарий таким образом, чтобы в коде был только один обработчик на событие click (вместо четырех обработчиков).
         Результат работы сценария не должен измениться.
         */
-        let input1 = document.querySelector("#input1");
-        let input3 = document.querySelector("#input2");
-
+       
+        const input1 = document.querySelector("#input1");
+        const input2 = document.querySelector("#input2");
+/*
         let addBtn = document.querySelector("#add-btn");
         let remBtn = document.querySelector("#rem-btn");
         let mulBtn = document.querySelector("#mul-btn");
@@ -46,6 +48,33 @@
         divBtn.addEventListener("click", function () {
             alert(input1.value / input2.value);
         });
+        */
+
+        const body = document.querySelector("body");
+
+        body.addEventListener("click", mathaAtion);
+
+        function mathaAtion(e) {
+            if (e.target.tagName === "BUTTON") {
+                switch (e.target.id) {
+                    case "add-btn":
+                        alert(Number(input1.value) + Number(input2.value));
+                        break;
+                    case "rem-btn":
+                        alert(input1.value - input2.value);
+                        break;
+                    case "mul-btn":
+                        alert(input1.value * input2.value);
+                        break;
+                    case "div-btn":
+                        alert(input1.value / input2.value);
+                        break;
+                }
+            }
+        }
+
+
+
     </script>
 </body>
 

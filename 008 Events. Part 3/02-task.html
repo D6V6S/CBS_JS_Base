@@ -45,6 +45,7 @@
 
     <div id="output"></div>
     <script>
+        'use strict';
         /*
         Задание:
         Доработайте сценарий.
@@ -156,19 +157,23 @@
             }
         ];
 
-        let uslerList = document.querySelector("#userList");
+        const uslerList = document.querySelector("#userList");
 
         for (let index = 0; index < users.length; index++) {
             const currentUser = users[index];
             let li = document.createElement("li");
             li.textContent = currentUser.name.first + " " + currentUser.name.last;
-            li.addEventListener("click", mouseEnterHandler); /*!!!*/
+            //li.addEventListener("click", mouseEnterHandler); /*!!!*/
             li.dataset.userNumber = index;
             uslerList.append(li);
         }
 
-        function mouseEnterHandler() { 
-            const currentUser = users[this.dataset.userNumber];
+        uslerList.addEventListener("click", mouseEnterHandler);
+
+        // function mouseEnterHandler() {
+        //     const currentUser = users[this.dataset.userNumber];
+        function mouseEnterHandler(event) {
+            const currentUser = users[event.target.dataset.userNumber];
             let message = "";
             message += "Company " + currentUser.company + "<br />";
             message += "Balance " + currentUser.balance + "<br />";
@@ -177,6 +182,7 @@
 
             document.querySelector("#output").innerHTML = message;
         }
+
     </script>
 </body>
 

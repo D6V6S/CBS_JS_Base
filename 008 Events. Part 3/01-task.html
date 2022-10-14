@@ -11,10 +11,18 @@
 <body>
     <button>Click me!</button>
     <script>
+        'use strict';
         /*
         Задание:
         Добавьте для кнопки два обработчика, один должен сработать в фазе capturing, второй - в фазе bubbling
         */
+
+        const button = document.querySelector("button");
+
+        button.addEventListener("click", (e) => alert('capturing'), true);
+
+        button.addEventListener("click", (e) => alert('bubbling'));
+
     </script>
 </body>
 
