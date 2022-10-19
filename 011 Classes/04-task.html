@@ -68,6 +68,9 @@
     <div class="input-panel">
         <input type="text" id="task-name-input">
         <button id="add-task-btn">Добавить задачу</button>
+        <button id="actual-task-btn">Показать не завершенные задачи</button>
+        <button id="all-task-btn">Показать все</button>
+        <!-- <button id="log-btn">Log</button> -->
     </div>
     <div class="task-list">
         <p id="start-message">Нет новых задач</p>
@@ -85,13 +88,18 @@
         При нажатии на кнопки, нужно удалять содержимое элемента .task-list и на основе данных, которые находятся в массиве
         tasks, заново строить DOM выбирая из массива те объекты, у которых свойство isDone содержит соответствующее значение.
         */
-        let taskNameInput = document.querySelector("#task-name-input");
-        let addTaskButton = document.querySelector("#add-task-btn");
-        let startMessage = document.querySelector("#start-message");
-        let taskList = document.querySelector(".task-list");
+        const taskNameInput = document.querySelector("#task-name-input");
+        const addTaskButton = document.querySelector("#add-task-btn");
+        const actualTaskButton = document.querySelector("#actual-task-btn");
+        const allTaskButton = document.querySelector("#all-task-btn");
+        //    const logBtn = document.querySelector("#log-btn").addEventListener("click", showLog);
+        const startMessage = document.querySelector("#start-message");
+        const taskList = document.querySelector(".task-list");
         let tasks = [];
 
         addTaskButton.addEventListener("click", addTaskHandler);
+        actualTaskButton.addEventListener("click", showActualTask);
+        allTaskButton.addEventListener("click", showAllTask);
 
         taskNameInput.addEventListener("keydown", function (e) {
             if (e.code == "Enter") addTaskHandler();
@@ -111,12 +119,56 @@
             }
         }
 
+        function showActualTask(){
+
+            //taskList.querySelectorAll("div.completed").forEach(task => task.remove());
+            
+            taskList.querySelectorAll("*").forEach(task => task.remove());
+            tasks.forEach(
+                task => {
+                    if (task.isDone == false) {
+                        let actualTask = new Task(task.text);
+                        actualTask.createIn(taskList);
+                    }
+                }
+            ) 
+        }
+
+        function showAllTask() {
+            taskList.querySelectorAll("*").forEach(task => task.remove());
+
+            tasks.forEach(
+                task=> {
+                    let allTask = new Task(task.text);
+                    // allTask.divTask = task.div;
+                    // allTask.isDoneTask = task.isDone;
+                    allTask.createIn(taskList);
+
+                }
+            ) 
+        }
+
+        // function showLog(){
+        //     console.log(tasks);
+        // }
+
+
         class Task {
             constructor(text) {
                 this.text = text;
                 this.isDone = false;
                 this.div = null;
             }
+           
+            // set isDoneTask(value) {
+            //     this.isDone = value;
+            //     console.log("set isDone" + this.isDone);
+            // } 
+
+            // set divTask(value) {
+            //     this.div = value;
+            //     console.log("set div" +this.div);
+            // }
 
             createIn(element) {
                 this.div = document.createElement("div");
