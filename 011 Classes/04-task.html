@@ -70,7 +70,6 @@
         <button id="add-task-btn">Добавить задачу</button>
         <button id="actual-task-btn">Показать не завершенные задачи</button>
         <button id="all-task-btn">Показать все</button>
-        <!-- <button id="log-btn">Log</button> -->
     </div>
     <div class="task-list">
         <p id="start-message">Нет новых задач</p>
@@ -92,7 +91,6 @@
         const addTaskButton = document.querySelector("#add-task-btn");
         const actualTaskButton = document.querySelector("#actual-task-btn");
         const allTaskButton = document.querySelector("#all-task-btn");
-        //    const logBtn = document.querySelector("#log-btn").addEventListener("click", showLog);
         const startMessage = document.querySelector("#start-message");
         const taskList = document.querySelector(".task-list");
         let tasks = [];
@@ -121,17 +119,17 @@
 
         function showActualTask(){
 
-            //taskList.querySelectorAll("div.completed").forEach(task => task.remove());
+            taskList.querySelectorAll("div.completed").forEach(task => task.remove());
             
-            taskList.querySelectorAll("*").forEach(task => task.remove());
-            tasks.forEach(
-                task => {
-                    if (task.isDone == false) {
-                        let actualTask = new Task(task.text);
-                        actualTask.createIn(taskList);
-                    }
-                }
-            ) 
+            // taskList.querySelectorAll("*").forEach(task => task.remove());
+            // tasks.forEach(
+            //     task => {
+            //         if (task.isDone == false) {
+            //             task.createIn(taskList);
+            //         }
+            //     }
+            // ) 
+
         }
 
         function showAllTask() {
@@ -139,18 +137,10 @@
 
             tasks.forEach(
                 task=> {
-                    let allTask = new Task(task.text);
-                    // allTask.divTask = task.div;
-                    // allTask.isDoneTask = task.isDone;
-                    allTask.createIn(taskList);
-
+                    task.createIn(taskList);
                 }
             ) 
         }
-
-        // function showLog(){
-        //     console.log(tasks);
-        // }
 
 
         class Task {
@@ -160,16 +150,6 @@
                 this.div = null;
             }
            
-            // set isDoneTask(value) {
-            //     this.isDone = value;
-            //     console.log("set isDone" + this.isDone);
-            // } 
-
-            // set divTask(value) {
-            //     this.div = value;
-            //     console.log("set div" +this.div);
-            // }
-
             createIn(element) {
                 this.div = document.createElement("div");
                 this.div.classList.add("task");
@@ -183,6 +163,11 @@
 
                 this.div.append(input);
                 this.div.append(p);
+
+                if (this.isDone) {
+                    this.div.classList.add("completed");
+                    input.checked = true;
+                }
                 element.append(this.div);
             }
 
