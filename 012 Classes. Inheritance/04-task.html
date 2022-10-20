@@ -100,7 +100,7 @@
             }
 
             add(item) {
-                this.items.push(item);
+                this.items.push(item);  
             }
 
             show() {
@@ -110,13 +110,24 @@
             }
         }
 
+        class ProductWithDiscount extends Product {
+            constructor(imageaPath, price, discount) {
+                super(imageaPath, price);
+                this.discount = this.price * (1 - discount/100);
+                let priceAndDiscount = `(${this.price}$) ${this.discount}`;
+                this.price = priceAndDiscount;
+            }
+
+        }
+
         let catalog = new Catalog("#catalog");
 
         catalog.add(new Product("images/img1.jpg", 35.55));
         catalog.add(new Product("images/img2.jpg", 25.25));
         catalog.add(new Advertisement("images/banner1.jpg", "https://itvdn.com/ru/catalog"));
         catalog.add(new Product("images/img3.jpg", 14.55));
-        catalog.add(new Product("images/img4.jpg", 65.55));
+        //catalog.add(new Product("images/img4.jpg", 65.55));
+        catalog.add(new ProductWithDiscount("images/img4.jpg", 65.55, 20));
         catalog.add(new Advertisement("images/banner2.jpg", "https://itvdn.comru/ru/specialities"));
 
         catalog.show();
