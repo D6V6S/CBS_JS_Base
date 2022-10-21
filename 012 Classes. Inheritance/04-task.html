@@ -30,7 +30,7 @@
     <template id="product">
         <div>
             <div class="bg" style="background-image: url('{{imagePath}}');"></div>
-            <p>{{price}}$</p>
+            <p>{{{price}}}$</p>
         </div>
     </template>
 
@@ -100,7 +100,11 @@
             }
 
             add(item) {
-                this.items.push(item);  
+                if (item instanceof CatalogItem){
+                    this.items.push(item);   
+                } else{
+                    alert("Данный метод принимает только классы производные от CatalogItem");
+                }
             }
 
             show() {
@@ -114,7 +118,7 @@
             constructor(imageaPath, price, discount) {
                 super(imageaPath, price);
                 this.discount = this.price * (1 - discount/100);
-                let priceAndDiscount = `(${this.price}$) ${this.discount}`;
+                let priceAndDiscount = `<s>${this.price}$</s> ${this.discount}`; //github.com/janl/mustache.js?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library
                 this.price = priceAndDiscount;
             }
 
