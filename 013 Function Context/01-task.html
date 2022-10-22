@@ -49,11 +49,13 @@
           меньше.
         */
 
-        let element = document.querySelector("#element");
-        let elementWidth = parseInt(getComputedStyle(element).width);
-        let containerWidth = parseInt(getComputedStyle(document.querySelector("#container")).width);
+        const element = document.querySelector("#element");
+        const elementWidth = parseInt(getComputedStyle(element).width);
+        const containerWidth = parseInt(getComputedStyle(document.querySelector("#container")).width);
 
         let direction = "right";
+        let timerId = null;
+        let time = 40;
 
         function moveLeft() {
             element.style.left = getLeft(element) - 3 + "px";
@@ -84,8 +86,58 @@
         }
 
         document.querySelector("#startBtn").addEventListener("click", function () {
-            setInterval(move, 40);
+            if (!timerId) {
+                timerId = setInterval(move, time);
+            }
         });
+
+        document.querySelector("#stopBtn").addEventListener("click", function () {
+            clearInterval(timerId);
+            timerId = null;
+            time = 40;
+        });
+
+         document.querySelector("#increaseBtn").addEventListener("click", function () {
+            clearInterval(timerId);
+            time = time / 1.25;
+            timerId = setInterval(move, time);
+         });
+
+        document.querySelector("#decreaseBtn").addEventListener("click", function () {
+            clearInterval(timerId);
+            time = time * 1.25;
+            timerId = setInterval(move, time);
+        });
+
+        // function startMove() {
+        //     if (!timerId) {
+        //         timerId = setInterval(move, time);
+        //     }
+        // };
+
+        // function stopMove() {
+        //     clearInterval(timerId);
+        //     time = 40;
+        // };
+
+        // function increase(){
+        //     time = time / 1.25;
+        //     clearInterval(timerId);
+        //     timerId = setInterval(move, time);
+        // }
+
+        // function decrease() {
+        //     time = time * 1.25;
+        //     clearInterval(timerId);
+        //     timerId = setInterval(move, time);
+        // }
+
+
+        // document.querySelector("#startBtn").addEventListener("click", startMove);
+        // document.querySelector("#stopBtn").addEventListener("click", stopMove);
+        // document.querySelector("#increaseBtn").addEventListener("click", increase);
+        // document.querySelector("#decreaseBtn").addEventListener("click", decrease);
+
     </script>
 </body>
 
