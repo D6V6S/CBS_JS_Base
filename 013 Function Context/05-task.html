@@ -31,6 +31,65 @@
         Пользователь: 56
         Сценарий: Правильно! Загаданное значение 56. Вы угадали с 4й попытки за 10 сек.
         */
+
+        const startTime = 0;
+        const endTime = 0;
+        let time = 0;
+        let timerId;
+        let i = 0;
+        let value = 0;
+       
+    //    function startTimer() {
+    //        if (!timerId) {
+    //            timerId = setInterval(timer, 1000);
+    //         }
+    //     }
+    //     //console.log("timerId " + timerId);
+        
+    //     function timer() {
+    //         time++;
+    //         console.log("time " + time);
+    //     }
+
+        //let timerId = setInterval(() => { time++ ; console.log("time " + time);}, 1000);
+        
+        //startTimer();
+        
+        //  function timer(){
+        //      timerId = window.setInterval(() => { time++; console.log("time " + time); }, 1000);
+        //  }
+
+
+        /*
+        
+        Як розв'язати через таймер????
+        
+        */
+
+
+        alert("Привіт! Давай пограємо! \nЯ загадав число від 1 до 100. \nПодивимось як швидко ти його відгадаєш)");
+
+        let randomValue = Math.floor(Math.random() * 101);
+        console.log(randomValue);
+
+        startTime = new Date().getTime();
+
+        while (randomValue != value) {
+            i++;
+            value = +prompt("Введи своє число.");
+            if (randomValue > value) {
+                    alert(`Я загадав число більше ніж ${value}`);
+            } else if (randomValue < value) {
+                    alert(`Я загадав число меньше ніж ${value}`);
+            }     
+        }
+
+        endTime = new Date().getTime();
+
+        time = Math.round(((endTime - startTime) / 1000));
+        
+        alert(`Вірно! Загадане число ${randomValue}. Ви вгадали з ${i}-ї спроби за ${time} сек.`);
+
     </script>
 </body>
 
