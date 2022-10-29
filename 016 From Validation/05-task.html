@@ -54,7 +54,8 @@
         </div>
         <div class="form-group">
             <label>Номер кредитной карты</label>
-            <input type="text" name="creditCard">
+            <input type="text" name="creditCard" data-val="true" data-required="Введите номер карты" data-error-label="creditCardErrorLabel" 
+            data-card="is it credit card">
             <span class="error" id="creditCardErrorLabel">Ошибка</span>
         </div>
         <div class="form-group">
@@ -158,6 +159,14 @@
                 let message = "Значения не совпадают";
                 let confirmInput = document.querySelector("#" + element.dataset.confirm);
                 return validators.validate(element, message, () => element.value == confirmInput.value);
+            }
+        };
+        
+        validators.card = {
+            isValid: function (element) {
+                let message = "Введенное значение не соответствует шаблону";
+                let regex = new RegExp('\\d{4}[ ]{1}\\d{4}[ ]{1}\\d{4}[ ]{1}\\d{4}'); // [0-9]{4}[ ]{1}[0-9]{4}[ ]{1}[0-9]{4}[ ]{1}[0-9]{4}               
+                return validators.validate(element, message, () => regex.test(element.value));
             }
         };
     </script>

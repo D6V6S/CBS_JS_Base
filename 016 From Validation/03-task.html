@@ -89,6 +89,24 @@
         значение совпадает с запрещенным, выводите сообщение об этом рядом с полем ввода.
         Проверку выполняйте на событие input
         */
+
+        const emailInput = document.querySelector('[name="emailInput"]');
+
+        form.emailInput.addEventListener("input", function () {
+            const emailProtected = ["admin@example.com", "superuser@example.com", "user@example.com"];
+
+            let pElement = document.createElement("p");
+            pElement.style.color = "red";
+            pElement.textContent = "Ви не можете зареєструватись з данним email.";
+
+            if(emailProtected.indexOf(form.emailInput.value) >= 0) {
+                emailInput.parentElement.append(pElement);
+            } else {
+                if (emailInput.nextElementSibling != null){
+                    emailInput.nextElementSibling.remove();
+                }  
+            }            
+        });
     </script>
 </body>
 

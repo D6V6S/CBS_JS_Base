@@ -15,6 +15,10 @@
             width: 75px;
             display: inline-block;
         }
+        .hint {
+            color: green;
+            display: none;
+        }
     </style>
 </head>
 
@@ -43,6 +47,74 @@
         2. В момент, когда поле ввода login получает фокус, покажите подсказку, которая находится в span#loginHint
            В момент, когда фокус получает поле ввода password - подсказку span#passwordHint
         */
+
+        let form = document.forms[0];
+        // let login = form.login;
+        // let password = form.password;
+        let userData = [form.login, form.password];
+        //const loginHint = document.querySelector("span#loginHint");
+        //const passwordHint = document.querySelector("span#passwordHint");
+        //const input = document.querySelectorAll("input");
+
+        function showMsg(hint) {
+            hint.nextElementSibling.style.display = "block";
+        }
+
+        function hideMsg(hint) {
+            hint.nextElementSibling.style.display = "none";
+        }
+
+        userData.forEach((feeld) => {
+            feeld.addEventListener("focus", function (event) {
+                showMsg(event.target);
+            });
+        });
+
+        // Перевірка введаених даних
+        userData.forEach((feeld) => {
+            feeld.addEventListener("blur", function (event) {
+                switch(feeld.name){
+
+                    case "login":
+                        if (event.target.value.length < 4) {
+                            showMsg(event.target);
+                        } else {
+                            hideMsg(event.target);
+                        } 
+                    break;
+
+                    case "password":
+                        if (event.target.value.length == 0) {
+                            showMsg(event.target);
+                        } else {
+                            hideMsg(event.target);
+                        }
+                    break;
+                };
+            });
+        });
+        
+
+        // password.addEventListener("focus", function (event) {
+        //     showMsg(event.target);
+        // });
+        
+        // password.addEventListener("blur", function (event) {
+        //     if (event.target.value.length == 0) {
+        //         showMsg(event.target);
+        //     } else {
+        //         hideMsg(event.target);
+        //     }
+        // });
+
+        form.addEventListener("submit", function (event) {
+            if (form.login.value.length < 4 || form.password.value.length == 0) {
+                event.preventDefault();
+            } else{
+                alert(`Login - ${form.login.value} Password - ${form.password.value}`);
+            }
+        });
+
     </script>
 </body>
 
