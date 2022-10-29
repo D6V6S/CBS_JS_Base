@@ -86,7 +86,7 @@
             <label for="age">Возраст</label>
             <input type="number" name="age" id="age" required min="18">
         </div>
-        <input type="button" value="Save" id="saveButton">
+        <input type="button" value="Save" id="saveButton"> <!--button => submit -->
         <input type="reset" value="Reset">
         <input type="button" value="Delete" id="deleteButton">
     </form>
@@ -323,6 +323,11 @@
                 alert("Форма заповнення не корректно.");
             }
         });
+
+        // saveButton.addEventListener("submit", function (e) {
+        //     formService.saveForm();
+        //     e.preventDefault();
+        // });
 
         // удаляем и очищаем форму
         deleteButton.addEventListener("click", function () {
