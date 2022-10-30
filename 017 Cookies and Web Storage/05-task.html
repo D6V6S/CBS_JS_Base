@@ -112,6 +112,13 @@
 
             open() {
                 this.tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            },
+
+            delete(deleteTask){
+                const index = this.tasks.findIndex(task => task.text == deleteTask);
+                if (index !== -1) {
+                    this.tasks.splice(index, 1);
+                }
             }
         }
 
@@ -172,8 +179,15 @@
                 let p = document.createElement("p");
                 p.innerText = this.task.text;
 
+                let btn = document.createElement("button");
+                    btn.addEventListener("click", this.deleteTask);
+                    btn.textContent = 'Удалить';
+                    btn.id = "delBtn";
+                    btn.style.marginLeft = "10px";
+
                 this.div.append(input);
                 this.div.append(p);
+                this.div.append(btn);
 
                 if (this.task.isDone) {
                     this.div.classList.add("completed");
@@ -186,6 +200,12 @@
                 this.task.isDone = !this.task.isDone;
                 dataService.save();
                 this.div.classList.toggle("completed");
+            }
+
+            deleteTask(element) {
+                dataService.delete(this.previousSibling.textContent);
+                this.parentElement.remove();
+                dataService.save();
             }
         }
 

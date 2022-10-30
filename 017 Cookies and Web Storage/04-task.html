@@ -72,7 +72,7 @@
         </div>
         <div class="form-group">
             <label for="balance">Баланс</label>
-            <input type="number" name="balance" id="balance" required min="1000">
+            <input type="number" name="balance" id="balance" required step="0.01" min="1000">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
@@ -195,6 +195,98 @@
             }
         ];
 
+        // let usersLsDb =[];
+
+        // // Перевірка, чи є в LocalStorage запис з користувачами
+        // function checkLocalStorage() {
+        //     if (localStorage.length != 0) {
+        //         for (let i = 0; i < localStorage.length; i++) {
+        //             let key = localStorage.key(i);
+        //             let value = localStorage.getItem(key);
+        //             if (key.substring(0, 6) == "userDB" && value != "[]") { // перевірка чи є запис і чи він не порожній
+        //                 //downloadUserDataFromLocalStorage(); 
+        //                 //usersLsDb = JSON.parse(localStorage.getItem(key)); // Завантаження даних користувачів з LocalStorage
+        //                 return false;
+        //             } else {
+        //                 return true;
+        //             }
+        //         }
+        //     } else {
+        //       return true;  
+        //     }
+        // }
+
+        // // Запис масиву в LocalStorage
+        // function uploadDataToLocalStorage() {
+        //     if (checkLocalStorage()) {
+        //             let jsonUser = JSON.stringify(users);
+        //             localStorage.setItem("userDB", jsonUser);  
+        //     }
+        //     downloadUserDataFromLocalStorage();
+        // }
+
+        // uploadDataToLocalStorage();
+
+        
+        // function downloadUserDataFromLocalStorage() {
+        //     if (localStorage.length != 0) {
+        //         for (let i = 0; i < localStorage.length; i++) {
+        //             let key = localStorage.key(i);
+        //             if (key.substring(0, 6) == "userDB") {
+        //                 usersLsDb = JSON.parse(localStorage.getItem(key));
+        //             }
+        //         }
+        //     }
+        // }
+
+        // // Запис зміненого масиву в LocalStorage
+        // function loadUsersToLocalStorage() {
+        //     let jsonUsersLsDb = JSON.stringify(usersLsDb);
+        //     localStorage.setItem("userDB", jsonUsersLsDb);
+        // }
+
+
+    let localStorageService = {
+        usersLsDb: [],
+        
+        checkLocalStorage() {
+            if (localStorage.length != 0) {
+                for (let i = 0; i < localStorage.length; i++) {
+                    let key = localStorage.key(i);
+                    let value = localStorage.getItem(key);
+                    if (key.substring(0, 6) == "userDB" && value != "[]") { // перевірка чи є запис і чи він не порожній
+                        this.downloadUserDataFromLocalStorage(); 
+                    } else {
+                        this.uploadDataToLocalStorage();
+                    }
+                }
+            } else {
+                this.uploadDataToLocalStorage();
+            }
+        },
+        
+        // Запис масиву в LocalStorage
+        uploadDataToLocalStorage() {
+            let jsonUser = JSON.stringify(users);
+            localStorage.setItem("userDB", jsonUser);
+            this.downloadUserDataFromLocalStorage(); 
+        },
+        
+        // Завантаження даних користувачів з LocalStorage
+        downloadUserDataFromLocalStorage() {
+            let objUser = localStorage.getItem("userDB");
+            this.usersLsDb = JSON.parse(objUser);
+        },
+
+        // Запис зміненого масиву в LocalStorage
+        uploadUsersToLocalStorage() {
+            let jsonUsersLsDb = JSON.stringify(this.usersLsDb);
+            localStorage.setItem("userDB", jsonUsersLsDb);
+        }
+    }
+
+    localStorageService.checkLocalStorage();
+
         // класс для вывода информации в UL
         class ListService {
             selectedData;
@@ -281,7 +373,7 @@
         let saveButton = document.querySelector("#saveButton");
         let deleteButton = document.querySelector("#deleteButton");
 
-        let listService = new ListService(users, userList, x => x.name.first + " " + x.name.last);
+        let listService = new ListService(localStorageService.usersLsDb, userList, x => x.name.first + " " + x.name.last);
         let formService = new UserFormService(document.forms[0]);
 
         userList.addEventListener("click", function (e) {
@@ -295,12 +387,14 @@
         document.forms[0].addEventListener("submit", function (e) {
             formService.saveForm();
             e.preventDefault();
+            localStorageService.uploadUsersToLocalStorage();
         });
 
         // удаляем и очищаем форму
         deleteButton.addEventListener("click", function () {
             listService.deleteSelectedItem();
             formService.resetForm();
+            localStorageService.uploadUsersToLocalStorage();
         });
     </script>
 </body>

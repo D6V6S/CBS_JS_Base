@@ -16,6 +16,18 @@
         Сделайте так чтобы значение, введенное в поле ввода на данной странице, сохранялось при каждом изменении.
         Когда пользователь повторно зайдет на эту страницу, поле ввода должно содержать последнее введенное значение.
         */
+
+        const textarea = document.querySelector('textarea');
+        const textInLocalStorege = localStorage.getItem("textareaLocalStorege");
+
+        if (textInLocalStorege){
+            textarea.innerText = textInLocalStorege;
+        }
+
+        textarea.oninput = () => {
+                localStorage.setItem('textareaLocalStorege', textarea.value);
+            };
+
     </script>
 </body>
 

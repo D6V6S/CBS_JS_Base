@@ -16,6 +16,21 @@
             width: 75px;
             display: inline-block;
         }
+
+        table {
+            margin: 10px
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        td,
+        th {
+            padding: 8px;
+        }
     </style>
 </head>
 
@@ -48,6 +63,19 @@
         </div>
     </form>
 
+    <br>
+
+    <div>
+        <input type="button" value="Показать все" id="showAll">
+        <input type="button" value="Очистить localStorage" id="cleanLocalStorage">
+    </div>
+
+    <br>
+
+    <table id="localStorageData">
+
+    </table>
+
     <script>
         /*
         Задание:
@@ -76,6 +104,50 @@
             let value = localStorage.getItem(key); 
             alert(value);
         });
+
+        const showAllBtn = document.querySelector("#showAll");
+        const localStorageBtn = document.querySelector("#cleanLocalStorage");
+        const localStorageTable = document.querySelector("#localStorageData");
+
+
+        function addRow(key, value) {
+            if (localStorageTable.firstChild == null){
+                let tr = document.createElement("tr");
+                tr.insertAdjacentHTML("beforeend", `<th>key</th>`);
+                tr.insertAdjacentHTML("beforeend", `<th>value</th>`);
+                localStorageTable.append(tr);
+            } 
+            
+            let tr = document.createElement("tr");
+            tr.insertAdjacentHTML("beforeend", `<td>${key}</td>`);
+            tr.insertAdjacentHTML("beforeend", `<td>${value}</td>`);    
+            localStorageTable.append(tr);
+        }
+
+        function cleanTable(){
+            while (localStorageTable.firstChild) {
+                localStorageTable.firstChild.remove();
+            }
+        }
+
+        showAllBtn.addEventListener("click", ()=>{
+            cleanTable();
+
+            if(localStorage.length){
+                for(let i=0; i< localStorage.length; i++){
+                    let key = localStorage.key(i) 
+                    addRow(key, localStorage.getItem(key));
+                }   
+            } else {
+                alert("Сховище пусте.");
+            }
+        })
+    
+        localStorageBtn.addEventListener("click", () => {
+            cleanTable();
+            localStorage.clear();
+        })
+
     </script>
 </body>
 
