@@ -16,6 +16,7 @@
         */
 
         function sum(a, b) {
+            if (a == null || b == null) throw new Error("Відсутній один з аргументів");
             return a + b;
         }
 

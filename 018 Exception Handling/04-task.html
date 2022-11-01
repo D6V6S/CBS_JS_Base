@@ -16,9 +16,23 @@
         Сделайте так, чтобы функция divide при попытке деления на 0 выбрасывала эту ошибку.
         Добавьте код, обрабатывающий исключение.
         */
+        class DivideByZeroError extends Error {
+            constructor() {
+                super(`Ділення на нуль.`);
+                this.name = "DivideByZeroError";
+            }
+        }
 
         function divide(operand1, operand2) {
-            return operand1 / operand2;
+            try{
+                if (operand2 == 0) {
+                    throw new DivideByZeroError();
+                   } else {
+                    return operand1 / operand2;   
+                }
+            } catch (error) {
+                return error.message;
+            } 
         }
 
         console.log(divide(10, 5));
