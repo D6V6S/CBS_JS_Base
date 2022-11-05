@@ -24,6 +24,31 @@
                 setTimeout(() => resolve("downloaded data"), random);
             });
         }
+
+        document.querySelector("button").addEventListener("click", function () {
+
+        download()
+            .then(result => {
+                console.log(result);
+                return download();
+            })
+            .then(result => {
+                console.log(result);
+                return download();
+            })
+            .then(result => {
+                console.log(result);
+                return download();
+            })
+            .then(result => {
+                console.log(result);
+                return download();
+            })
+            .then(result => {
+                console.log(result);
+                alert("Всей файлы скачаны");
+            })
+        });
     </script>
 </body>
 
