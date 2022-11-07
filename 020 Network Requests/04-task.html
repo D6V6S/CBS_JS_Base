@@ -6,15 +6,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task 04</title>
+    <style>
+        table {
+            margin: 10px
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        td,
+        th {
+            padding: 8px;
+        }
+    </style>
 </head>
 
 <body>
+    <table>
+        <tr>
+            <th>userId</th>
+            <th>id</th>
+            <th>title</th>
+            <th>completed</th>
+        </tr>
+    </table>
     <script>
         /*
         Задание:
         Напишите сценарий, который выполняет GET запрос по адресу https://jsonplaceholder.typicode.com/todos
         И выводит содержимое ответа в виде таблицы.
         */
+
+        const table = document.querySelector("table");
+        const url = "https://jsonplaceholder.typicode.com/todos";
+
+        fetch(url)
+            .then(response => response.json())
+            .then(json => {
+                json.forEach(element => createTr(element));
+            })
+
+        function createTr(element) {
+            let tr = document.createElement("tr");
+
+            let elementToArr= Object.values(element);
+
+            elementToArr.forEach(el => {
+                let td = document.createElement("td");
+                td.innerHTML = el;
+                tr.append(td);
+            }) 
+
+            table.append(tr);
+            }
+
     </script>
 </body>
 

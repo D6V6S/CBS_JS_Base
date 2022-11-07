@@ -6,9 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task 02</title>
+    <style>
+        .form-group label {
+            width: 45px;
+            display: inline-block;
+        }
+
+        .form-group input {
+            width: 100px;
+            height: 30px;
+        }
+    </style>
 </head>
 
 <body>
+    <form>
+        <div class="form-group">
+            <label>title</label>
+            <textarea name="" id="titleFeeeld" cols="60" rows="5"></textarea>
+        </div>
+        <br>
+        <div class="form-group">
+            <label>body</label>
+            <textarea name="" id="bodyFeeeld" cols="60" rows="5"></textarea>
+        </div>
+        <br>
+        
+        <div class="form-group">
+            <input type="submit" value="Внести зміни">
+        </div>
+    </form>
+
     <script>
         /*
         Задание:
@@ -30,6 +58,41 @@
         для обновления сущности воспользуйтесь PUT запросом https://jsonplaceholder.typicode.com/posts/1. Обработайте ответ
         и выведите информацию о ошибке или об успешно завершенной операции.
         */
+       
+        const form = document.forms[0];
+        const titleInput = form.titleFeeeld;
+        const bodyInput = form.bodyFeeeld;
+        let url = "https://jsonplaceholder.typicode.com/posts/1";
+
+        fetch(url)
+            .then(response => response.json())
+            .then(json =>{
+                titleInput.value = json.title;
+                bodyInput.value = json.body;
+            })
+
+        document.forms[0].addEventListener("submit", function () {
+            event.preventDefault();
+
+            let data = {
+                title: titleInput.value,
+                body: bodyInput.value
+            };
+
+            fetch(url, {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then(response => response.json())
+                .then(json => { 
+                    alert("Данні успішно змінено.");
+                    console.log(json);})
+                .catch(error => console.log(error.message))
+        });
+
     </script>
 </body>
 

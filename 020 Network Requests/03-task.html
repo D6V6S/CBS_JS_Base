@@ -9,12 +9,28 @@
 </head>
 
 <body>
+    <div></div>
     <script>
         /*
         Задание:
         Напишите сценарий, который при загрузке страницы выполнит GET запрос на https://jsonplaceholder.typicode.com/photos
         и выведет на странице все изображения в виде <img>, которые будут получены в ответе.
         */
+        const div = document.querySelector("div");
+        const url = "https://jsonplaceholder.typicode.com/photos";
+
+        fetch(url)
+            .then(response => response.json())
+            .then(json => {
+                json.forEach(element => createImg(element));
+            })
+
+        function createImg (element){
+            let img = document.createElement("img");
+            img.src = element.url;
+            img.alt = element.title;
+            div.append(img);
+        }
     </script>
 </body>
 
